@@ -1,12 +1,12 @@
-# imagemin-gifsicle [![Build Status](http://img.shields.io/travis/imagemin/imagemin-gifsicle.svg?style=flat)](https://travis-ci.org/imagemin/imagemin-gifsicle)
+# gif-resize [![Build Status](https://travis-ci.org/gumlet/gif-resize.svg?branch=master)](https://travis-ci.org/gumlet/gif-resize)
 
-> Imagemin plugin for [Gifsicle](https://www.lcdf.org/gifsicle/)
+> Nodejs plugin for [Gifsicle](https://www.lcdf.org/gifsicle/)
 
 
 ## Install
 
 ```
-$ npm install imagemin-gifsicle
+$ npm install gif-resize
 ```
 
 
