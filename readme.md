@@ -9,24 +9,19 @@
 $ npm install gif-resize
 ```
 
-
 ## Usage
 
 ```js
-const imagemin = require('imagemin');
-const imageminGifsicle = require('imagemin-gifsicle');
+const gifResize = require('gif-resize');
+const fs = require("fs");
 
-(async () => {
-	await imagemin(['images/*.gif'], 'build/images', {
-		use: [
-			imageminGifsicle()
-		]
-	});
-
-	console.log('Images optimized');
-})();
+const buf = fs.readFileSync("avocado.gif");
+gifResize({
+	width: 200
+})(buf).then(data => {
+	console.log("'data' contains processed GIF.");
+});
 ```
-
 
 ## API
 
@@ -34,9 +29,27 @@ const imageminGifsicle = require('imagemin-gifsicle');
 
 Returns a promise for a buffer.
 
-#### options
+### options
 
 Type: `Object`
+
+##### width
+
+Type: `number`
+
+Resize GIF to given width in pixels. It maintains aspect ratio.
+
+##### height
+
+Type: `number`
+
+Resize GIF to given height in pixels. It maintains aspect ratio.
+
+##### stretch
+
+Type: `boolean`
+
+If this is set, and `width` and `height` both are provided, the GIF will be resized such that it exactly matches the dimensions provided. It won't match the aspect ratio.
 
 ##### interlaced
 
@@ -48,7 +61,7 @@ Interlace gif for progressive rendering.
 ##### optimizationLevel
 
 Type: `number`<br>
-Default: `1`
+Default: `2`
 
 Select an optimization level between `1` and `3`.
 
@@ -64,13 +77,53 @@ Type: `number`
 
 Reduce the number of distinct colors in each output GIF to num or less. Num must be between 2 and 256.
 
-#### buffer
+##### resize_method
+
+Type: `string`
+Default: `lanczos3`
+
+Set the method used to resize images. The `sample` method runs very quickly, but when shrinking images, it produces noisy results. The `mix` method is somewhat slower, but produces better-looking results. The default method is currently `mix`.
+
+Gifsicle also supports more complex resamplers, including Catmull-Rom cubic resampling (`catrom`), the Mitchell-Netravali filter (`mitchell`), a 2-lobed Lanczos filter (`lanczos2`), and a 3-lobed Lanczos filter (`lanczos3`). These filters are slower still, but can give sharper, better results.
+
+##### gamma
+
+Type: `number`
+
+Set the gamma correction to gamma, which can be a real number or ‘srgb’.
+
+##### crop
+
+Type: `array`
+
+Crop box in format `[left, top, width, height]`.
+
+##### flip_h
+
+Type: `boolean`
+
+Flips GIF horizontally.
+
+##### flip_v
+
+Type: `boolean`
+
+Flips GIF vertically.
+
+##### rotate
+
+Type: `number`
+
+Rotates GIF image. Valid values are `90`, `180` and `270`. All other values are silently ignored.
+
+
+### buffer
 
 Type: `Buffer`
 
-Buffer to optimize.
+Buffer to optimize / resize.
 
 
 ## License
 
-MIT © [imagemin](https://github.com/imagemin)
+MIT © [Gumlet](https://github.com/gumlet)
