@@ -25,7 +25,7 @@ gifResize({
 
 ## API
 
-### imageminGifsicle([options])(buffer)
+### gifResize([options])(buffer)
 
 Returns a promise for a buffer.
 
