@@ -2,12 +2,25 @@ const fs = require("fs"),
   path = require("path"),
   isGif = require("is-gif"),
   crypto = require("crypto"),
+  getPixels = require("get-pixels"),
   gifResize = require("../src/index");
 
 const {
   promisify
 } = require('util');
+
 const readFileAsync = promisify(fs.readFile);
+const getPixelsAsync = async function(buffer, type = "image/gif"){
+  return new Promise((resolve, reject) => {
+    getPixels(buffer, type, function(err, pixels){
+      if(err){
+        reject(err);
+      } else{
+        resolve(pixels);
+      }
+    })
+  });
+}
 
 
 test('Default optimize', async () => {
@@ -22,7 +35,10 @@ test('resize width to 300 px', async () => {
   const data = await gifResize({
     width: 300
   })(buf);
-  expect(md5(data)).toBe(md5(await readFileAsync(__dirname + "/test_images/avocado_300.gif")));
+  let diff = compare(await getPixelsAsync(data),
+    await getPixelsAsync(await readFileAsync(__dirname + "/test_images/avocado_300.gif")));
+
+  expect(diff).toBeGreaterThan(0.99);
 });
 
 test('resize height to 300 px', async () => {
@@ -30,7 +46,10 @@ test('resize height to 300 px', async () => {
   const data = await gifResize({
     height: 300
   })(buf);
-  expect(md5(data)).toBe(md5(await readFileAsync(__dirname + "/test_images/avocado_300.gif")));
+  let diff = compare(await getPixelsAsync(data),
+    await getPixelsAsync(await readFileAsync(__dirname + "/test_images/avocado_300.gif")));
+
+  expect(diff).toBeGreaterThan(0.99);
 });
 
 test('crop image', async () => {
@@ -38,7 +57,10 @@ test('crop image', async () => {
 	const data = await gifResize({
 		crop: [200, 300, 100, 100]
   })(buf);
-	expect(md5(data)).toBe(md5(await readFileAsync(__dirname + "/test_images/avocado_crop.gif")));
+  let diff = compare(await getPixelsAsync(data),
+    await getPixelsAsync(await readFileAsync(__dirname + "/test_images/avocado_crop.gif")));
+
+  expect(diff).toBeGreaterThan(0.99);
 });
 
 test('flip horizontally', async () => {
@@ -46,7 +68,10 @@ test('flip horizontally', async () => {
 	const data = await gifResize({
 		flip_h: true
   })(buf);
-	expect(md5(data)).toBe(md5(await readFileAsync(__dirname + "/test_images/avocado_flip_h.gif")));
+  let diff = compare(await getPixelsAsync(data),
+    await getPixelsAsync(await readFileAsync(__dirname + "/test_images/avocado_flip_h.gif")));
+
+  expect(diff).toBeGreaterThan(0.99);
 	// fs.writeFileSync(__dirname + '/test_images/avocado_flip_h.gif', data);
 });
 
@@ -55,7 +80,10 @@ test('flip vertically', async () => {
 	const data = await gifResize({
 		flip_v: true
   })(buf);
-	expect(md5(data)).toBe(md5(await readFileAsync(__dirname + "/test_images/avocado_flip_v.gif")));
+  let diff = compare(await getPixelsAsync(data),
+    await getPixelsAsync(await readFileAsync(__dirname + "/test_images/avocado_flip_v.gif")));
+
+  expect(diff).toBeGreaterThan(0.99);
 });
 
 test('Interlaced output', async () => {
@@ -63,7 +91,10 @@ test('Interlaced output', async () => {
 	const data = await gifResize({
     interlaced: true
   })(buf);
-	expect(md5(data)).toBe(md5(await readFileAsync(__dirname + "/test_images/avocado_interlaced.gif")));
+  let diff = compare(await getPixelsAsync(data),
+    await getPixelsAsync(await readFileAsync(__dirname + "/test_images/avocado_interlaced.gif")));
+
+  expect(diff).toBeGreaterThan(0.99);
 });
 
 test('rotate', async () => {
@@ -118,6 +149,15 @@ test('throws error when non-buffer is passed', async () => {
 });
 
 
-function md5(string) {
-  return crypto.createHash('md5').update(string).digest('hex');
+function compare(arr1, arr2){
+  if(JSON.stringify(arr1.shape) != JSON.stringify(arr2.shape)){
+    return 0;
+  }
+  let delta = 0;
+  for (var i = 0; i < arr1.data.length; i++){
+    delta = delta + Math.abs(arr1.data[i] - arr2.data[i]);
+  }
+  var maxDiff = 255 * arr1.data.length;
+
+  return 1 - 100 * delta / maxDiff;
 }
