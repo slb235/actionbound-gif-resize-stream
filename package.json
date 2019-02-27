@@ -1,34 +1,45 @@
 {
-	"name": "gif-resize",
-	"version": "1.0.3",
-	"description": "Nodejs plugin to resize GIFs",
-	"license": "MIT",
-	"repository": "gumlet/gif-resize",
-	"engines": {
-		"node": ">=8"
-	},
-	"scripts": {
-		"test": "jest --coverage"
-	},
-	"main": "src/index.js",
-	"keywords": [
-		"compress",
-		"gif",
-		"resize",
-		"gifsicle",
-		"gulpplugin",
-		"image",
-		"img",
-		"minify",
-		"optimize"
-	],
-	"dependencies": {
-		"exec-buffer": "^3.0.0",
-		"gifsicle": "^4.0.0",
-		"is-gif": "^3.0.0"
-	},
-	"devDependencies": {
-		"get-pixels": "^3.3.2",
-		"jest": "^24.0.0"
-	}
+  "name": "@gumlet/gif-resize",
+  "version": "1.0.4",
+  "description": "Nodejs plugin to resize GIFs",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gumlet/gif-resize.git"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "main": "src/index.js",
+  "keywords": [
+    "compress",
+    "gif",
+    "resize",
+    "gifsicle",
+    "gulpplugin",
+    "image",
+    "img",
+    "minify",
+    "optimize"
+  ],
+  "dependencies": {
+    "exec-buffer": "^3.0.0",
+    "gifsicle": "^4.0.0",
+    "is-gif": "^3.0.0"
+  },
+  "devDependencies": {
+    "get-pixels": "^3.3.2",
+    "jest": "^24.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/gumlet/gif-resize/issues"
+  },
+  "homepage": "https://github.com/gumlet/gif-resize#readme",
+  "directories": {
+    "test": "tests"
+  },
+  "author": "Aditya Patadia"
 }
