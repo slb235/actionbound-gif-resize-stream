@@ -6,7 +6,7 @@
 ## Install
 
 ```
-$ npm install gif-resize
+$ npm install @gumlet/gif-resize
 ```
 
 ## Usage
