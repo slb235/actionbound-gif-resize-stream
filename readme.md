@@ -12,7 +12,7 @@ $ npm install @gumlet/gif-resize
 ## Usage
 
 ```js
-const gifResize = require('gif-resize');
+const gifResize = require('@gumlet/gif-resize');
 const fs = require("fs");
 
 const buf = fs.readFileSync("avocado.gif");
