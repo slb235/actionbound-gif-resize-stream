@@ -1,4 +1,6 @@
-# gif-resize [![Build Status](https://travis-ci.org/gumlet/gif-resize.svg?branch=master)](https://travis-ci.org/gumlet/gif-resize)
+# gif-resize 
+
+[![Build Status](https://github.com/gumlet/gif-resize/workflows/Node%20CI/badge.svg)](https://github.com/gumlet/gif-resize/actions)
 
 > Nodejs plugin for [Gifsicle](https://www.lcdf.org/gifsicle/)
 
