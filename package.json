@@ -1,6 +1,6 @@
 {
   "name": "@gumlet/gif-resize",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Nodejs plugin to resize GIFs",
   "license": "MIT",
   "repository": {
@@ -8,11 +8,17 @@
     "url": "git+https://github.com/gumlet/gif-resize.git"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "scripts": {
     "test": "jest --coverage"
   },
+  "files": [
+		"index.js",
+		"cli.js",
+		"lib",
+		"vendor/source"
+	],
   "main": "src/index.js",
   "keywords": [
     "compress",
@@ -27,12 +33,12 @@
   ],
   "dependencies": {
     "exec-buffer": "^3.0.0",
-    "gifsicle": "^4.0.0",
+    "gifsicle": "^5.0.0",
     "is-gif": "^3.0.0"
   },
   "devDependencies": {
     "get-pixels": "^3.3.2",
-    "jest": "^24.0.0"
+    "jest": "^25.0.0"
   },
   "bugs": {
     "url": "https://github.com/gumlet/gif-resize/issues"
