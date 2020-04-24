@@ -1,5 +1,5 @@
 'use strict';
-const execBuffer = require('exec-buffer');
+const execa = require('execa');
 const gifsicle = require('gifsicle');
 const isGif = require('is-gif');
 
@@ -73,12 +73,9 @@ module.exports = opts => buf => {
 		}
 	}
 
-	args.push('--output', execBuffer.output, execBuffer.input);
-
-	return execBuffer({
-		input: buf,
-		bin: gifsicle,
-		args
+	args.push('--output', "-");
+	return execa(gifsicle, args, {input: buf, encoding: null}).then(output => {
+		return output.stdout;
 	}).catch(error => {
 		error.message = error.stderr || error.message;
 		throw error;
