@@ -3,10 +3,11 @@ const execa = require('execa');
 const gifsicle = require('gifsicle');
 const isGif = require('is-gif');
 
-module.exports = opts => buf => {
+module.exports = opts => async buf => {
 	opts = Object.assign({
 		resize_method: "lanczos3",
-		optimizationLevel: 2
+		optimizationLevel: 2,
+		output_webp: false
 	}, opts);
 
 	if (!Buffer.isBuffer(buf)) {
@@ -74,10 +75,18 @@ module.exports = opts => buf => {
 	}
 
 	args.push('--output', "-");
-	return execa(gifsicle, args, {input: buf, encoding: null}).then(output => {
-		return output.stdout;
-	}).catch(error => {
+
+	try {
+		const gif_output = await execa(gifsicle, args, {input: buf, encoding: null});
+
+		if(opts.output_webp) {
+			const webp_output = await execa("gif2webp", ['-quiet', '-mt', '-metadata', 'none', '-m', '2', '-lossy', '-o', '-', '--', '-'], {input: gif_output.stdout, encoding: null});
+			return webp_output.stdout
+		} else {
+			return gif_output.stdout
+		}
+	} catch (error) {
 		error.message = error.stderr || error.message;
 		throw error;
-	});
+	}
 };
