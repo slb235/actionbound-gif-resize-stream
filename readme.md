@@ -1,4 +1,4 @@
-# gif-resize 
+# gif-resize
 
 [![Build Status](https://github.com/gumlet/gif-resize/workflows/Node%20CI/badge.svg)](https://github.com/gumlet/gif-resize/actions)
 
@@ -59,6 +59,13 @@ Type: `boolean`<br>
 Default: `false`
 
 Interlace gif for progressive rendering.
+
+##### output_webp
+
+Type: `boolean`<br>
+Default: `false`
+
+Output buffer contains `WebP` image. `gif2webp` binary needs to be present in your `$PATH` for this conversion to work.
 
 ##### optimizationLevel
 
