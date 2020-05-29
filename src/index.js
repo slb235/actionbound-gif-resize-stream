@@ -80,7 +80,7 @@ module.exports = opts => async buf => {
 		const gif_output = await execa(gifsicle, args, {input: buf, encoding: null});
 
 		if(opts.output_webp) {
-			const webp_output = await execa("gif2webp", ['-quiet', '-mt', '-metadata', 'none', '-m', '2', '-lossy', '-o', '-', '--', '-'], {input: gif_output.stdout, encoding: null});
+			const webp_output = await execa("gif2webp", ['-quiet', '-mt', '-metadata', 'none', '-q', '85', '-m', '2', '-lossy', '-o', '-', '--', '-'], {input: gif_output.stdout, encoding: null});
 			return webp_output.stdout
 		} else {
 			return gif_output.stdout
