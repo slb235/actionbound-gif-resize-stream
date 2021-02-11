@@ -7,8 +7,7 @@ module.exports = opts => async buf => {
 	opts = Object.assign({
 		resize_method: "lanczos3",
 		optimizationLevel: 2,
-		output_webp: false,
-		lossy: 20
+		output_webp: false
 	}, opts);
 
 	if (!Buffer.isBuffer(buf)) {
