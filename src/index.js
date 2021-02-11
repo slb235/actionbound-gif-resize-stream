@@ -7,7 +7,8 @@ module.exports = opts => async buf => {
 	opts = Object.assign({
 		resize_method: "lanczos3",
 		optimizationLevel: 2,
-		output_webp: false
+		output_webp: false,
+		lossy: 20
 	}, opts);
 
 	if (!Buffer.isBuffer(buf)) {
@@ -30,6 +31,10 @@ module.exports = opts => async buf => {
 
 	if (opts.colors) {
 		args.push(`--colors=${opts.colors}`);
+	}
+
+	if (opts.lossy) {
+		args.push(`--lossy=${opts.lossy}`);
 	}
 
 	if (opts.resize_method) {
