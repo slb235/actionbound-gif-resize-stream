@@ -60,12 +60,12 @@ Default: `false`
 
 Interlace gif for progressive rendering.
 
-##### output_webp
+##### timeout
 
-Type: `boolean`<br>
-Default: `false`
+Type: `number`<br>
+Default: `0`
 
-Output buffer contains `WebP` image. `gif2webp` binary needs to be present in your `$PATH` for this conversion to work.
+This is process timeout in milliseconds. If set to positive number, it will throw timeout error after that many milliseconds.
 
 ##### optimizationLevel
 

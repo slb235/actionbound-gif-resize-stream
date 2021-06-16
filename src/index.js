@@ -6,7 +6,8 @@ const isGif = require('is-gif');
 module.exports = opts => async buf => {
 	opts = Object.assign({
 		resize_method: "lanczos3",
-		optimizationLevel: 2
+		optimizationLevel: 2,
+		timeout: 0
 	}, opts);
 
 	if (!Buffer.isBuffer(buf)) {
@@ -80,7 +81,7 @@ module.exports = opts => async buf => {
 	args.push('--output', "-");
 
 	try {
-		const gif_output = await execa(gifsicle, args, {input: buf, encoding: null});
+		const gif_output = await execa(gifsicle, args, {input: buf, encoding: null, timeout: opts.timeout});
 		return gif_output.stdout;
 	} catch (error) {
 		error.message = error.stderr || error.message;
