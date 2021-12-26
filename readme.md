@@ -1,35 +1,28 @@
-# gif-resize
-
-[![Build Status](https://github.com/gumlet/gif-resize/workflows/Node%20CI/badge.svg)](https://github.com/gumlet/gif-resize/actions)
-
-> Nodejs plugin for [Gifsicle](https://www.lcdf.org/gifsicle/)
-
-
-## Install
-
-```
-$ npm install @gumlet/gif-resize
-```
+# actionbound-gif-resize-stream
 
 ## Usage
 
 ```js
-const gifResize = require('@gumlet/gif-resize');
-const fs = require("fs");
+const gifResize = require("actionbound-gif-resize-stream")
+const fs = require("fs")
 
-const buf = fs.readFileSync("avocado.gif");
-gifResize({
+const rs = fs.createReadStream("input.gif")
+const ws = fs.createWriteStream("output.gif")
+const gif = gifResize({
 	width: 200
-})(buf).then(data => {
-	console.log("'data' contains processed GIF.");
-});
+})(rs)
+
+gif.stdout.pipe(ws)
+gif.stderr.resume()
+
+await gif
 ```
 
 ## API
 
-### gifResize([options])(buffer)
+### gifResize([options])(stream)
 
-Returns a promise for a buffer.
+Returns a execa promise/object for a stream.
 
 ### options
 
@@ -135,4 +128,5 @@ Buffer to optimize / resize.
 
 ## License
 
-MIT © [Gumlet](https://github.com/gumlet)
+Original: MIT © [Gumlet](https://github.com/gumlet/gif-resize)
+MIT
