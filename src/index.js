@@ -71,5 +71,5 @@ module.exports = opts => stream => {
 
 	args.push('--output', "-");
 
-	return execa(gifsicle, args, {input: stream, encoding: null, buffer: false});
+	return execa(gifsicle, args, {input: stream, encoding: null, buffer: false, timeout: opts.timeout});
 };
