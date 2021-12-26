@@ -69,6 +69,10 @@ module.exports = opts => stream => {
 		}
 	}
 
+	if(opts.scale) {
+		args.push(`--scale=${opts.scale}x${opts.scale}`)
+	}
+
 	args.push('--output', "-");
 
 	return execa(gifsicle, args, {input: stream, encoding: null, buffer: false, timeout: opts.timeout});

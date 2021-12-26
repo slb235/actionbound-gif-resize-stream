@@ -1,6 +1,6 @@
 {
   "name": "actionbound-gif-resize-stream",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Nodejs plugin to resize GIFs",
   "license": "MIT",
   "repository": {
